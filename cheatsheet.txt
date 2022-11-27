@@ -156,3 +156,159 @@ horizontal(line(point(X, Y),point(X2, Y))).
 // this is olso not defined but true X=no_debt and Y=money
 
 //traces:
+?-trace. 
+//to turn on the trace usually used for debugging
+
+mammal(human). 
+//this will display diffrent steps
+
+?- notrace.
+//to turn off the debugger
+
+//recursion:
+
+related(X, Y) :- parent(X, Z) , related(Z, Y).
+//we can get the grand father from the father
+
+?- related(Z, carl).
+//get the parents and grand parent of carl 
+
+//math:
+?- X is 2+2.
+// meaning x=2+2.
+
+?- X is 3+(2*10).
+//we can use parenthese
+
+?- 5+4 =:= 4+5.
+//check for equality
+
+?- 5+4 =\= 4+5.
+//check for inequality
+
+?- X is mod(7, 2).
+//calc the mod
+
+?- random(0, 10, X).
+//generate random value between 0 and 10 and store it in X 
+
+?-between(0, 10, X).
+//get numbers between 0 and 10
+
+?- X is abs(-10).
+//get the abs value of -10
+
+?- succ(2, X).
+//get the next value here 3
+
+?- X is max(7, 19).
+?- X is min(3, 9).
+//the max and the min between two values
+
+?- X is round(10.56).
+//convert float values to integers here 11 is close than 10
+
+?- X is truncate(10.56).
+//get the integer part 10 here
+
+?- X is floor(10.56).
+// here will be 10
+
+?- X is ceiling(10.56).
+// will round up to 11
+
+?- X is 2**3.
+//2^3 will be 8
+
+// inputs and outputs:
+
+?- write("Hello world"), nl.
+//to print something
+
+?- writeq("Hello world"), nl.
+//print it with cotes
+
+say_hi :- write("what\'s your name? "), nl,
+    read(X),
+    write("Hi "),
+    write(X).
+// read() to accept input from user
+// between cotes
+
+fav_char :- write("what\'s your favourite char? "),
+    get(X),
+    format("the ascii value ~w is ", [X]),
+    put(X), nl.
+// get(X) to get single char
+// X will have ascii value
+//put(X) to print the char
+
+//read and write to a file:
+// see db.pl file :D 
+
+//looping:
+//using recursion
+count_to_10(10) :- write(10), nl.
+count_to_10(X) :-
+    write(X), nl,
+    Y is X + 1,
+    count_to_10(Y).
+
+//changing database:
+
+:-dynamic(father/2).
+//father(X, Y) it accepts 2 arguments
+
+?- assertz(father(alpha, beta)).
+//add it to end
+
+?- asserta(father(beta, gamma)).
+//add it to beginning
+
+?-retract(loves(romeo, juliet)).
+//romeo no longer loves juliet :(
+
+?-retractall(father(_, _)).
+//delete every single father!!
+
+//lists:
+?- write([albert | [alice, bob]]), nl.
+//add albert to the beginning of the list
+
+?- length([1, 2, 3, 4, 5], X).
+//get the list in X 
+
+?- [H|T] = [a, b, c, d, e, f].
+//get the head and the tail of the list 
+
+?- [_, X2 | T] = [1, 2].
+// _ will ignore it , X2 is 2 and T is []
+
+?- List1 = [2,6,10].
+?- member(2, List1).
+//check if 2 in in List1
+
+?- member(X, [2, 3, 4]).
+//get all elements of a list
+
+?- reverse([1,2,3], X).
+// get the reverse list
+
+?- append([1,2,3,4], [5,6], X).
+//concatenate two lists
+
+//strings:
+?- name('a random string', X).
+// will covert it to a list of ascii values
+
+?- name(X, [121, 101, 115]).
+//will convert the ascii list into string
+
+?- name("najid", List), nth0(0, List, Fchar), put(Fchar).
+//get the first char in ascii 
+
+?-atom_length('najid', X).
+//get the length of a string
+
+
+
