@@ -1,0 +1,158 @@
+------------------------
+
+> is our terminal
+?- the swipl terminal
+nothing for the db.pl file
+
+------------------------
+
+//run the swi-prolog terminal:
+> ./swilp
+
+//exit the swi-prolog terminal:
+?- halt.
+
+// load a file (the database):
+?- [db].
+?- consult('db.pl').
+
+// print to screen:
+?- write('Hello World').
+?- write('Hello World'), nl, write('Let\'s code in prolog'). //nl is newline
+
+// fact, predicat and atoms
+loves(romeo, juliet).
+//loves(x,y) is a fact
+//loves() is a predicat
+//x, y are atoms
+
+//rules
+loves(juliet, romeo) :- loves(romeo, juliet).
+//:- is like if condition
+// , is and 
+// ; is or 
+
+
+// an atom start with lowercase and a variable start with upercase
+
+//list all males
+?- male(X).
+..
+?- listing(male).
+..
+//show combinations between males and females
+
+?- male(X), female(Y).
+// hit ; to display the next combination
+
+//make our own predicat:
+does_alice_dance :- dances(alice), write("something to print here").
+
+//swims(bill) :- happy(bill).
+//swims(bill) :- near_water(bill).
+//swims(bill). is true even if near_water(bill) is not defined
+
+
+//variables:
+?- parent(Y, carl), parent(X, Y).
+// Y is the parent to cart and X are the grandparent 
+
+?- parent(albert, X), parent(X, Y).
+// X is children of albert and Y are the grandchildren
+
+//custum predicat with variables:
+get_grandchildren :- parent(albert, X), parent(X, Y),
+    write("albert grand children is: "), nl,
+    write(Y).
+
+?- get_grandchildren
+
+//does carl and charlie share a parent 
+parent(X, carl), parent(X, charlie).
+
+//using format to display variables:
+get_sharedparent :- parent(X, carl), parent(X, charlie),
+    format("~w ~s parent ~n", [X, "is the"]).
+
+//~w for variable X 
+//~s for the string
+//~n for newline 
+
+?- parent(X, carl), brother(X, Y).
+// X is the parent of carl and Y is his uncle
+
+// axioms:
+grandparent(X, Y) :- parent(Z, Y), parent(Y, Z).
+// get the grandparent of carl
+?- grandparent(X, carl).
+
+
+stabs(tybalt, mercutio, sword).
+hates(romeo, X) :- stabs(X, mercutio, sword).
+// romeo is going to hates the person who stabs mercutio with sword
+
+
+//anonymous variables:
+//check for existance without any additional infos
+male(_).
+
+//case statement:
+what_grad(5) :- write("Go to Kindergarten").
+what_grad(6) :- write("Go to 1st Grade").
+what_grad(Other) :- Grade is Other - 5,
+    format('Go to grade ~w', [Grade]).
+
+what_grad(9). 
+//will call it on num then 4 and print it
+
+//structures:
+has(albert, olive).
+owns(albert, pet(cat, X)).
+// albert has a cat named olive 
+
+custumer(sally, _, X).
+// X is ballance of sally with any second named
+
+//get the customer balance using custom fact
+get_cust_bal(Fname, Lname) :-
+    customer(Fname, Lname, X),
+    write(Fname), tab(1),
+    format('~w owes us ~2f$ ~n', [Lname, X]).
+
+?- get_cust_bal(sally, smith).
+?- get_cust_bal(sally, _).
+
+//horizontal vs vertical (exemple):
+vertical(line(point(X, Y),point(X, Y2))).
+horizontal(line(point(X, Y),point(X2, Y))).
+// will throw a warining called Singleton variables that means variable that's not used it's ok here
+
+?- vertical(line(point(3, 1),point(3, 2))).
+
+//what value should X be to be vertical:
+?- vertical(line(point(3, 1),point(X, 2))).
+
+// ask for a both X and Y
+?- vertical(line(point(3, 1), X)).
+
+
+//compare things:
+
+//is alice equal to alice?
+?- alice = alice.
+?- 'alice' = alice
+
+//is alice not equal to albert?
+?- \+ (alice = albert).
+
+?- 3 > 5.
+?- 5 > 3.
+
+//this is true an assinement not a comparison
+?- W = alice. 
+?- W = X.
+
+?- rich(money, X) = rich(Y, no_debt).
+// this is olso not defined but true X=no_debt and Y=money
+
+//traces:
